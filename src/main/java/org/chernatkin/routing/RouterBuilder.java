@@ -15,7 +15,7 @@ public class RouterBuilder {
     
     private final Map<String, Node<Station>> nodes;
     
-    private final ExecutorService executor;
+    private ExecutorService executor;
     
     public static RouterBuilder routerBuilder(int edgesNumber){
         return new RouterBuilder(edgesNumber);
@@ -24,12 +24,7 @@ public class RouterBuilder {
     private RouterBuilder(int edgesNumber) {
         this.nodes = new HashMap<>(edgesNumber * 2, 1);
         int coresNumber = Runtime.getRuntime().availableProcessors();
-        if(coresNumber > 1){
-            executor = new ThreadPoolExecutor(coresNumber, coresNumber, 0, TimeUnit.SECONDS, new LinkedBlockingQueue<>());
-        }
-        else{
-            executor = null;
-        }
+        this.executor = new ThreadPoolExecutor(coresNumber, coresNumber, 0, TimeUnit.SECONDS, new LinkedBlockingQueue<>());
     }
 
     public RouterBuilder addEdge(String stationFrom, String stationTo, int weight){
@@ -46,12 +41,7 @@ public class RouterBuilder {
         final Router router = new Router(nodes.size());
         
         for (Node<Station> node : nodes.values()){
-            if(executor != null){
-                executor.submit(() -> addRouterInfo(router, node));
-            }
-            else{
-                addRouterInfo(router, node);
-            }
+            executor.submit(() -> addRouterInfo(router, node));
         }
         
         try {

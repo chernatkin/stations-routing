@@ -7,8 +7,9 @@ import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
+import org.chernatkin.routing.graph.GraphUtils;
 import org.chernatkin.routing.graph.Node;
-import org.chernatkin.routing.model.Route;
+import org.chernatkin.routing.graph.Route;
 import org.chernatkin.routing.model.Station;
 
 public class RouterBuilder {
@@ -55,10 +56,10 @@ public class RouterBuilder {
     }
     
     private void addRouterInfo(Router router, Node<Station> node){
-        final Map<Node<Station>, Route> routes = GraphUtils.findRoutes(node);
+        final Map<Node<Station>, Route<Station>> routes = GraphUtils.findRoutes(node);
         RoutingInfo info = new RoutingInfo(routes.size());
         
-        for(Map.Entry<Node<Station>, Route> entry : routes.entrySet()){
+        for(Map.Entry<Node<Station>, Route<Station>> entry : routes.entrySet()){
             info.addRoute(entry.getKey().getStation(), entry.getValue());
         }
         

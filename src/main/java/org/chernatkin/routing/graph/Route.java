@@ -1,16 +1,16 @@
-package org.chernatkin.routing.model;
+package org.chernatkin.routing.graph;
 
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class Route {
+public class Route<T> {
     
     private final int weight;
     
-    private final List<Station> stations;
+    private final List<T> stations;
 
-    public Route(int weight, List<Station> route) {
+    public Route(int weight, List<T> route) {
         this.weight = weight;
         this.stations = Collections.unmodifiableList(route);
     }
@@ -24,7 +24,7 @@ public class Route {
         return weight;
     }
 
-    public List<Station> getStations() {
+    public List<T> getStations() {
         return stations;
     }
 
@@ -45,7 +45,7 @@ public class Route {
             return false;
         if (getClass() != obj.getClass())
             return false;
-        Route other = (Route) obj;
+        Route<T> other = (Route<T>) obj;
         if (stations == null) {
             if (other.stations != null)
                 return false;

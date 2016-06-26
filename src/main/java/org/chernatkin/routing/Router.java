@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.chernatkin.routing.model.Route;
+import org.chernatkin.routing.graph.Route;
 import org.chernatkin.routing.model.Station;
 
 public class Router {
@@ -18,15 +18,15 @@ public class Router {
         nameToStation = new HashMap<>(stationsNumber, 1);
     }
 
-    public Route loadRoute(Station from, Station to){
-        Route route = ROUTNG_MAP.get(from).getRoute(to);
+    public Route<Station> loadRoute(Station from, Station to){
+        Route<Station> route = ROUTNG_MAP.get(from).getRoute(to);
         if(route == null){
             throw new IllegalArgumentException(String.format("Error: No route from %s to %s", from, to));
         }
         return route;
     }
     
-    public List<Route> getNearBy(Station from, int maxTime){
+    public List<Route<Station>> getNearBy(Station from, int maxTime){
         return ROUTNG_MAP.get(from).getNearBy(maxTime);
     }
     

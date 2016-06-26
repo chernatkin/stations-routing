@@ -3,7 +3,8 @@ package org.chernatkin.routing;
 import java.util.Arrays;
 import java.util.List;
 
-import org.chernatkin.routing.model.Route;
+import org.chernatkin.routing.graph.Route;
+import org.chernatkin.routing.model.Station;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -30,7 +31,7 @@ public class DisconnectedGraphTest extends AbstractGraphTest {
 
     @Test
     public void routeInFirstGroupTest(){
-        Route route = getRouter().loadRoute(station("A"), station("B"));
+        Route<Station> route = getRouter().loadRoute(station("A"), station("B"));
         
         Assert.assertEquals(130, route.getWeight());
         Assert.assertEquals(Arrays.asList(station("A"), 
@@ -41,7 +42,7 @@ public class DisconnectedGraphTest extends AbstractGraphTest {
     
     @Test
     public void routeInSecondGroupTest(){
-        Route route = getRouter().loadRoute(station("F"), station("H"));
+        Route<Station> route = getRouter().loadRoute(station("F"), station("H"));
         
         Assert.assertEquals(300, route.getWeight());
         Assert.assertEquals(Arrays.asList(station("F"), 
@@ -57,7 +58,7 @@ public class DisconnectedGraphTest extends AbstractGraphTest {
     
     @Test
     public void nearByInFirstGroupTest(){
-        List<Route> routes = getRouter().getNearBy(station("A"), 130);
+        List<Route<Station>> routes = getRouter().getNearBy(station("A"), 130);
         
         Assert.assertEquals(Arrays.asList(route(70, "A","C"),
                                           route(120, "A", "D"),
@@ -68,7 +69,7 @@ public class DisconnectedGraphTest extends AbstractGraphTest {
     @Test
     public void nearByInSecondGroupTest(){
         Router router = getRouter();
-        List<Route> routes = router.getNearBy(station("F"), 500);
+        List<Route<Station>> routes = router.getNearBy(station("F"), 500);
         
         Assert.assertEquals(Arrays.asList(route(100, "F","G"),
                                           route(300, "F", "G", "H")),

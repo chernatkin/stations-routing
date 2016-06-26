@@ -6,7 +6,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
-import org.chernatkin.routing.model.Route;
+import org.chernatkin.routing.graph.Route;
 import org.chernatkin.routing.model.Station;
 
 public class Main {
@@ -89,7 +89,7 @@ public class Main {
         Station fromStation = router.checkStation(from);
         Station toStation = router.checkStation(to);
         
-        Route route = router.loadRoute(fromStation, toStation);
+        Route<Station> route = router.loadRoute(fromStation, toStation);
         
         console.printf("%s: %s\n", route.getStations().stream()
                                                     .map(s -> s.getName())
@@ -99,7 +99,7 @@ public class Main {
     
     private static void executeNearBy(Console console, Router router, String from, int maxTime){
         Station fromStation = router.checkStation(from);
-        List<Route> list = router.getNearBy(fromStation, maxTime);
+        List<Route<Station>> list = router.getNearBy(fromStation, maxTime);
         
         console.printf(list.stream()
                            .map(r -> {

@@ -3,7 +3,8 @@ package org.chernatkin.routing;
 import java.util.Arrays;
 import java.util.List;
 
-import org.chernatkin.routing.model.Route;
+import org.chernatkin.routing.graph.Route;
+import org.chernatkin.routing.model.Station;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -26,7 +27,7 @@ public class ConnectedGraphTest extends AbstractGraphTest {
 
     @Test
     public void routeTest(){
-        Route route = getRouter().loadRoute(station("A"), station("B"));
+        Route<Station> route = getRouter().loadRoute(station("A"), station("B"));
         
         Assert.assertEquals(130, route.getWeight());
         Assert.assertEquals(Arrays.asList(station("A"), 
@@ -37,7 +38,7 @@ public class ConnectedGraphTest extends AbstractGraphTest {
     
     @Test
     public void nearByTest(){
-        List<Route> routes = getRouter().getNearBy(station("A"), 130);
+        List<Route<Station>> routes = getRouter().getNearBy(station("A"), 130);
         
         Assert.assertEquals(Arrays.asList(route(70, "A","C"),
                                           route(120, "A", "D"),

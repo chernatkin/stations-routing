@@ -18,18 +18,6 @@ public class Node<T> {
     public T getStation() {
         return station;
     }
-    
-    public void addInEdge(Node<T> node, int weight){
-        addEdge(in, node, weight);
-    }
-    
-    public void addOutEdge(Node<T> node, int weight){
-        addEdge(out, node, weight);
-    }
-    
-    private void addEdge(Set<Edge<T>> edges, Node<T> node, int weight){
-        edges.add(new Edge<T>(weight, node));
-    }
 
     public Set<Edge<T>> getIn() {
         return in;
@@ -62,5 +50,10 @@ public class Node<T> {
         } else if (!station.equals(other.station))
             return false;
         return true;
+    }
+
+    @Override
+    public String toString() {
+        return "Node [station=" + station + "]";
     }
 }
